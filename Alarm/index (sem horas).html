@@ -1,0 +1,113 @@
+<!-- 
+    @author: Tiago Luiz Cabral do Nascimento 
+-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronômetro (Sem Horas)</title>
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        button {
+            background: #069;
+            color: white;
+            font-size: 32px;
+            padding: 8px 20px;
+            cursor: pointer;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Container para o som do alarme -->
+    <div>
+        <audio id="sound" src="sounds/alarm.wav"></audio>
+    </div>
+
+    <!-- Controles do cronômetro -->
+    <div class="container">
+        <!-- <h2>Horas</h2>
+            <select id="horas"></select> -->
+        <h2>Minutos</h2>
+        <select id="minutos"></select>
+        <h2>Segundos</h2>
+        <select id="segundos"></select>
+        <br><br>
+        <button id="comecar">Iniciar</button>
+    </div>
+
+    <!-- Display dos números do contador -->
+    <div id="display">
+        <h3 style="text-align: center;"></h3>
+    </div>
+
+    <!-- Função dos cronômetro-->
+    <script>
+        // Armazenamento dos controles e do display do cronômetro.
+        let display = document.getElementById('display')
+        // let horas = document.getElementById('horas')
+        let minutos = document.getElementById('minutos')
+        let segundos = document.getElementById('segundos')
+        let comecar = document.getElementById('comecar')
+
+        // Contador e controle do passar do tempo.
+        let cronometreoSeg;
+        // let horaAtual;
+        let minutoAtual;
+        let segundoAtual;
+        let interval;
+
+        // Criação das horas, minutos e segundos.
+        /*for(var i = 0; i <= 100; i++) {
+            horas.innerHTML += '<option value = "' + i + '">' + i + '<option>'
+        } */
+        for (var i = 0; i <= 59; i++) {
+            minutos.innerHTML += '<option value = "' + i + '">' + i + '</option>'
+        }
+        for (var i = 0; i <= 59; i++) {
+            segundos.innerHTML += '<option value = "' + i + '">' + i + '</option>'
+        }
+
+        // Evento que acessa e altera os valores do cronômetro.
+        comecar.addEventListener('click', function () {
+            // horaAtual = horas.value
+            minutoAtual = minutos.value
+            segundoAtual = segundos.value
+
+            display.childNodes[1].innerHTML = /* horaAtual + ":" + */ minutoAtual + ":" + segundoAtual
+
+            interval = setInterval(function () {
+                segundoAtual--
+
+                if (segundoAtual <= 0) {
+                    if (minutoAtual > 0) {
+                        minutoAtual--
+                        segundoAtual = 59
+                    } /*else if (minutoAtual <= 0) {
+                            if (horaAtual > 0) {
+                                horaAtual--
+                                minutoAtual = 59
+                            }   
+                        } */else {
+                        document.getElementById('sound').play()
+                        alert('Cronômetro Encerrado!');
+                        clearInterval(interval)
+                    }
+                }
+
+                display.childNodes[1].innerHTML = /*horaAtual + ":" +  */ minutoAtual + ":" + segundoAtual
+            }, 1000)
+        })
+
+    </script>
+</body>
+
+</html>
