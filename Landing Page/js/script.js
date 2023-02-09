@@ -1,1 +1,0 @@
-// Template for future implementations
